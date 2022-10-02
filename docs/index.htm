@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>Shooting Stars</title>
+</head>
+<body>
+    <h3>Shooting Stars</h3>
+    <p id="msg">
+        <table>
+            <tr>
+                <td><input type="button" id="1" onclick="adj(this.id)" value=" ">
+                <td><input type="button" id="2" onclick="adj(this.id)" value=" ">
+                <td><input type="button" id="3" onclick="adj(this.id)" value=" ">
+            </tr>
+            <tr>
+                <td><input type="button" id="4" onclick="adj(this.id)" value=" ">
+                <td><input type="button" id="5" onclick="adj(this.id)" value="*">
+                <td><input type="button" id="6" onclick="adj(this.id)" value=" ">
+            </tr>
+            <tr>
+                <td><input type="button" id="7" onclick="adj(this.id)" value=" ">
+                <td><input type="button" id="8" onclick="adj(this.id)" value=" ">
+                <td><input type="button" id="9" onclick="adj(this.id)" value=" ">
+            </tr>
+        </table>
+        Shots: <input type="text" id="counter"  style="width: 28px;" value=0><br>
+    </p>
+   <input type="button" onclick="document.location.reload();" value="Restart">
+
+</body>
+<script language = 'javascript'>
+
+function adj(item) {
+    element = document.getElementById(item);
+        if (element.value == "*") {
+            counter = Number(document.getElementById("counter").value);
+            document.getElementById("counter").value = counter += 1;
+            item = Number(item);
+
+            swap(item);
+            if(item > 3) {
+                swap(item - 3);
+            }
+            if(item < 7) {
+                swap(item + 3);
+            }
+
+            rem = (item % 3);
+//            console.log(rem);
+            if(rem > 0) {
+                swap(item + 1);
+            } 
+            if(rem != 1) {
+                swap(item - 1);
+            }
+            finished(counter);
+        }
+    }
+
+    function swap(item) {
+//        console.log(item);
+        element = document.getElementById(item);
+        if (element.value == "*") {
+            element.value = " ";
+        } else {
+            element.value = "*";
+        } 
+    }
+
+    function finished(counter) {
+        starCount = 0; //all outer cells are blank?
+        for (x = 1; x < 10; x++) {
+            element = document.getElementById(x);
+            if(element.value == "*") {
+                starCount +=1;
+            }
+        }
+        if(starCount == 0) {
+                document.getElementById("msg").innerHTML = "You have eliminated all the Stars in " + counter + " moves!<br>Press reset to replay the game.";
+        } 
+        else {
+            if (starCount == 8 && document.getElementById(5).value == " ") {
+                document.getElementById("msg").innerHTML = "Good job!<br>You won in " + counter + " moves!";
+            }
+        }
+    }
+</script>
+</html>
